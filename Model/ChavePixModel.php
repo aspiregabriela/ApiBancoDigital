@@ -36,12 +36,4 @@ class ChavePixModel extends Model {
     }
 
 
-    public function getById(int $id)
-    {
-        include 'DAO/ChavePixDAO.php';
-        $dao = new ChavePixDAO();
-        $obj = $dao->selectById($id);
-
-        return($obj) ? $obj : new ChavePixModel();
-    }
 }

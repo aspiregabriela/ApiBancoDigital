@@ -7,5 +7,6 @@ abstract class Model
 {
 
     public $rows;
+    public $rows_contas;
     
 }
