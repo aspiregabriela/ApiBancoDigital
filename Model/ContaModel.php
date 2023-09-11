@@ -28,7 +28,7 @@ class ContaModel extends Model
     {
         include 'DAO/ContaDAO.php';
         $dao = new ContaDAO();
-        $obj = $dao->selectById($id);
+       // $obj = $dao->selectById($id);
 
         return($obj) ? $obj : new ContaModel();
     }

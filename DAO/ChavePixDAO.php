@@ -3,6 +3,7 @@
 namespace ApiBancoDigital\DAO;
 
 use ApiBancoDigital\Model\ChavePixModel;
+use PDO;
 
 
 class ChavePixDAO extends DAO
@@ -12,6 +13,12 @@ class ChavePixDAO extends DAO
     {
         parent::__construct();       
     }
+
+    public function save(ChavePixModel $model) : ?ChavePixModel
+    {
+        return ($model->id == null) ? $this->insert($model) : $this->update($model);
+    }
+
 
 
     public function select()
