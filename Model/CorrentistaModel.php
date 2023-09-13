@@ -53,4 +53,9 @@ class CorrentistaModel extends Model
     {
         (new CorrentistaDAO())->delete($this->id);
     }
+    public function getByCpfAndSenha($cpf, $senha) : CorrentistaModel
+    {      
+        return (new CorrentistaDAO())->selectByCpfAndSenha($cpf, $senha);
+    }
+
 }

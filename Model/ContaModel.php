@@ -33,7 +33,7 @@ class ContaModel extends Model
         return($obj) ? $obj : new ContaModel();
     }
 
-    public function getAllRows()
+    public function getAllRows(int $id)
     {
         include 'DAO/ContaDAO.php';
         $dao = new ContaDAO();

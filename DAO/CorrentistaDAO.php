@@ -91,6 +91,7 @@ class CorrentistaDAO extends DAO
         return $stmt->fetchAll(DAO::FETCH_CLASS, "ApiBancoDigital\Model\CorrentistaModel");
     }
 
+    
     public function selectByCpfAndSenha($cpf, $senha) : CorrentistaModel
     {
         $sql = "SELECT * FROM correntista WHERE cpf = ? AND senha = sha1(?) ";
@@ -100,11 +101,24 @@ class CorrentistaDAO extends DAO
         $stmt->bindValue(2, $senha);
         $stmt->execute();
 
+        /**
+         * Aqui estamos organizando os dados vindos do banco como um Model CorrentistaModel
+         * mas se a query não tiver nenhum resultado fetchObject retorna um bool false e portanto,
+         * neste caso fetchObject pode retornar um objeto ou um bool.
+         */
         $obj = $stmt->fetchObject("App\Model\CorrentistaModel");
 
+        /**
+         * Aqui verificamos se o retorno do banco foi um objeto do tipo model
+         * (portando o usuário colocou CPF e Senha corretos e um resultado foi encontrado) ou
+         * um bool false, que indica que nenhum resultado foi encontrado.
+         * Se for um bool, nós iremos retornar um model Vazio (por padrão as propriedades são null)
+         * e iremos verificar no App se a propriedade Id é null ou não.
+         */
         return is_object($obj) ? $obj : new CorrentistaModel();
-
     }
+
+
 
 }
 	

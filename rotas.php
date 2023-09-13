@@ -15,7 +15,8 @@ switch($url)
     break;
 
     case '/correntista/entrar':
-        
+        CorrentistaController::salvar();
+       
     break;
 
     case '/conta/pix/enviar':

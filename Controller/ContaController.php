@@ -34,7 +34,7 @@ class ContaController extends Controller
         {
             $model = new ContaModel();
 
-            $model->getAllRows();
+           // $model->getAllRows();
 
             parent::getResponseAsJSON($model->rows);
 

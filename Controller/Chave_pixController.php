@@ -4,7 +4,7 @@ use ApiBancoDigital\Model\ChavePixModel;
 use Exception;
 
 class ChavePixController extends Controller {
-	public static function salvar() 
+	public static function salvar() : void
 	{
 		try
         {
