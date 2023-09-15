@@ -31,6 +31,23 @@ class CorrentistaController extends Controller
             parent::getExceptionAsJSON($e);
         }
     }
+    public static function entrar() : void 
+    {
+        try {
+			$json_obj = json_decode(file_get_contents('php://input'));
+
+			$model = new CorrentistaModel();
+			$model->cpf = $json_obj->cpf;
+			$model->senha = $json_obj->senha;
+
+			parent::getResponseAsJSON($model->entrar());
+		} catch (Exception $err) {
+			parent::getExceptionAsJSON($err);
+		}
+    }
+
+
+
 
     public static function listar() : void
     {
