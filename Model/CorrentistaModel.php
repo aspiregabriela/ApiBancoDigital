@@ -42,7 +42,9 @@ class CorrentistaModel extends Model
         return $model_preenchido;    
     }
     public function entrar() {
+
 		$dao = new CorrentistaDAO();
+        
 		return $dao->selectCorrentistaByCpfAndSenha($this);
 	}
 
