@@ -24,21 +24,27 @@ class ChavePixController extends Controller {
             parent::getExceptionAsJSON($e);
         }
 	}
+
 	public static function listar() : void
     {
         try
         {
-            $model = new ChavePixModel();
+            $json_obj = json_decode(file_get_contents('php://input'));
 
-            $model->getAllRows();
 
-            parent::getResponseAsJSON($model->rows);
+			$model = new ChavePixModel();
+			$model->id_conta = $json_obj->id_conta;
+
+
+			parent::getResponseAsJSON($model->GetChavePixByIdConta($json_obj->id));
 
         } catch (Exception $e) {
 
+            parent::LogError($e);
             parent::getExceptionAsJSON($e);
         }
     }
+    
 
     public static function deletar() : void
     {

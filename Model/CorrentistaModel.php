@@ -9,7 +9,7 @@ class CorrentistaModel extends Model
 {
    
     public $id, $nome, $cpf, $data_nasc, $senha;
-    public $rows_conta;
+    public $rows_conta, $listar_conta;
  
     public function save() : ?CorrentistaModel
     {
@@ -53,6 +53,28 @@ class CorrentistaModel extends Model
     {
         $this->rows = (new CorrentistaDAO())->select();
     }
+    public function getAllContas()
+    {
+        include './DAO/ContaDAO.php';
+
+        $dao = new ContaDAO();
+
+        $this->listar_conta = $dao->select();
+    }
+    public function consultaCPF($cpf)
+    {
+        $dao = new CorrentistaDAO();
+
+		return $dao->getCorrentistaByCPF($cpf);		
+    }
+
+    public function auth($cpf, $senha)
+    {
+	    $dao = new CorrentistaDAO();
+
+		return $dao->getCorrentistaByCpfAndSenha($cpf, $senha);		
+	}
+
 
    
     public function delete()

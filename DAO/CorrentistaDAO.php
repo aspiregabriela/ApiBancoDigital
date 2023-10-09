@@ -17,7 +17,7 @@ class CorrentistaDAO extends DAO
     }
 
 
-    public function insert(CorrentistaModel $model)
+    public function insert(CorrentistaModel $model): CorrentistaModel
     {
         $sql = "INSERT INTO correntista (nome, cpf, data_nasc, senha) VALUES (?, ?, ?, ?) ";
 
@@ -128,6 +128,45 @@ class CorrentistaDAO extends DAO
          * e iremos verificar no App se a propriedade Id é null ou não.
          */
         return is_object($obj) ? $obj : new CorrentistaModel();
+    }
+    public function getCorrentistaByCpfAndSenha($cpf, $senha)
+    {
+        $sql = "SELECT * FROM correntista c WHERE cpf = ? AND senha = ? ";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $cpf);
+        $stmt->bindValue(2, $senha);
+
+        $stmt->execute();
+
+        $obj = $stmt->fetchObject("ApiBancoDigital\Model\CorrentistaModel");
+
+        if(is_object($obj))
+        {
+            // chamar a dao de contas
+            $obj->lista_conta = (new ContaDAO)->selectByIdCorrentista($obj->id);
+
+            return $obj;
+            
+        } else
+            return new CorrentistaModel();
+    }
+
+    public function getCorrentistabyCPF($cpf)
+    {
+        $sql = "SELECT * FROM correntista WHERE cpf = ?";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1, $cpf);
+
+        $obj = $stmt->fetchObject("ApiBancoDigital\Model\CorrentistaModel");
+
+        if (is_object($obj))
+        {
+            var_dump($obj);
+            return $obj;
+        }
+        else return new CorrentistaModel();
     }
 
 

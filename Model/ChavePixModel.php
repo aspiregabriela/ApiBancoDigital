@@ -29,6 +29,12 @@ class ChavePixModel extends Model {
         $this->rows = $dao->select();
 
     }
+    public function GetChavePixByIdConta(int $id_conta){
+
+        $dao = new ChavePixDAO();
+
+        $this->rows = $dao->selectByIdConta($id_conta);
+    }
 
     public function delete()
     {

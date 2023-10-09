@@ -58,6 +58,18 @@ class ChavePixDAO extends DAO
         $stmt->bindValue(4, $m->id);
 
         return $stmt->execute();
+     }
+
+    public function selectByIdConta(string $id_conta)
+    {      
+        $sql = "SELECT * FROM conta WHERE id_conta=?";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1,$id_conta);
+        $stmt->execute();
+
+        return $stmt->fetchAll(DAO::FETCH_CLASS, "Api\Model\ChaveModel");
+    
     }
 
     public function delete(int $id) : bool
@@ -68,4 +80,7 @@ class ChavePixDAO extends DAO
         $stmt->bindValue(1, $id);
         return $stmt->execute();
     }
+
+
+
 }

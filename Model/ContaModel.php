@@ -3,14 +3,14 @@
 namespace ApiBancoDigital\Model;
 
 use ApiBancoDigital\DAO\ContaDAO;
-
+use ApiBancoDigital\DAO\ChavePixDAO;
+use Exception;
 
 class ContaModel extends Model
 {
 
     public $id, $numero, $tipo, $senha, $id_correntista;
-
-    public $rows;
+    public $lista_pix, $rows;
 
     public function save()
     {
@@ -39,6 +39,26 @@ class ContaModel extends Model
         $dao = new ContaDAO();
 
         $this->rows = $dao->select();
+    }
+    public function getContaByIdCorrentista(int $id_correntista)
+    {
+            $dao = new ContaDAO();
+
+            $this->rows = $dao->selectByIdCorrentista($id_correntista);
+    }
+
+    public function getContaByNumeroConta(string $numero)
+    {
+        return (new ContaDAO())->selectByNumeroConta($numero);
+    }
+
+    public function getAllChaves()
+    {
+        include './DAO/ChavePixDAO.php';
+
+        $dao = new ChavePixDAO;
+
+        $this->lista_pix = $dao->select();
     }
 
 

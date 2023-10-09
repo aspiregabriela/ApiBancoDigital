@@ -32,18 +32,21 @@ class ContaController extends Controller
     {
         try
         {
-            $model = new ContaModel();
+            $json_obj = json_decode(file_get_contents('php://input'));
 
-           // $model->getAllRows();
 
-            parent::getResponseAsJSON($model->rows);
+			$model = new ContaModel();
+			$model->id_correntista = $json_obj->id_correntista;
+
+
+			parent::getResponseAsJSON($model->getContaByIdCorrentista($json_obj->id));
 
         } catch (Exception $e) {
 
+            parent::LogError($e);
             parent::getExceptionAsJSON($e);
         }
     }
-
     public static function deletar() : void
     {
         try 
@@ -60,4 +63,18 @@ class ContaController extends Controller
             parent::getExceptionAsJSON($e);
         }
     }
+
+    public static function SelecionarConta() : void
+	{
+		try
+		{
+			$json_obj = json_decode(file_get_contents('php://input'));
+
+			parent::getResponseAsJSON((new ContaModel())->getContaByNumeroConta($json_obj->numero));
+		}
+		catch(Exception $e)
+		{
+			parent::getResponseAsJSON($e);
+		}
+	}
 }

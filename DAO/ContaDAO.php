@@ -40,6 +40,47 @@ class ContaDAO extends DAO
         return $m;
 
     }
+    public function selectByIdCorrentista(int $id_correntista) : array
+    {
+        
+        $sql = "SELECT * FROM conta WHERE id_correntista=?";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1,$id_correntista);
+        $stmt->execute();
+
+        return $stmt->fetchAll(DAO::FETCH_CLASS, "ApiBancoDigital\Model\ContaModel");
+    }
+    public function numeroConta(){
+
+        $pt1 = rand(10000000,99999999);
+        $pt2 = rand(0,9);
+
+        $num_conta = $pt1."-".$pt2;
+
+        return $num_conta;
+
+    }
+
+    public function selectByNumeroConta(string $numero)
+    {      
+        $sql = "SELECT * FROM conta WHERE numero=?";
+
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->bindValue(1,$numero);
+        $stmt->execute();
+        
+        $obj = $stmt->fetchObject("ApiBancoDigital\Model\ContaModel");
+
+        if (is_object($obj))
+        {
+            
+            return $obj;
+        }
+        else return new ContaModel();
+
+        
+    }
 
     public function update(ContaModel $model)
     {
